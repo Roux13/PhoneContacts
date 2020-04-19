@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +80,7 @@ public class ContactsFragment extends Fragment {
     }
 
     private void searchInDic(List<String> contacts) {
-        if (searchText.equals("")) {
+        if (TextUtils.isEmpty(searchText)) {
             loadDic(contacts);
         } else {
             contacts.clear();
@@ -97,8 +98,10 @@ public class ContactsFragment extends Fragment {
     private void makeQuery(List<String> contacts, String selection) {
         Cursor cursor = getContext().getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                        ContactsContract.CommonDataKinds.Phone.NUMBER},
+                new String[]{
+                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                        ContactsContract.CommonDataKinds.Phone.NUMBER
+                },
                 selection, null, null
         );
         try {
