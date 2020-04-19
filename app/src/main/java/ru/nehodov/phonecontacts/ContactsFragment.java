@@ -4,9 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -51,10 +48,14 @@ public class ContactsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                searchText = newText;
+                searchInDic(contacts);
+                updateUI();
+                return true;
             }
         });
         searchView.setOnCloseListener(() -> {
+            searchText = null;
             loadDic(contacts);
             updateUI();
             return true;
@@ -77,6 +78,7 @@ public class ContactsFragment extends Fragment {
     private void loadDic(List<String> contacts) {
         contacts.clear();
         makeQuery(contacts, null);
+        updateUI();
     }
 
     private void searchInDic(List<String> contacts) {
