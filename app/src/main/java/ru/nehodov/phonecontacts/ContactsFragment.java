@@ -55,6 +55,8 @@ public class ContactsFragment extends Fragment {
             }
         });
         searchView.setOnCloseListener(() -> {
+            searchView.clearFocus();
+            searchView.onActionViewCollapsed();
             searchText = null;
             loadDic(contacts);
             updateUI();
@@ -98,22 +100,19 @@ public class ContactsFragment extends Fragment {
     }
 
     private void makeQuery(List<String> contacts, String selection) {
-        Cursor cursor = getContext().getContentResolver().query(
+        try (Cursor cursor = getContext().getContentResolver().query(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{
                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER
                 },
                 selection, null, null
-        );
-        try {
+        )) {
             while (cursor.moveToNext()) {
                 String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String number = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 contacts.add(name + " " + number);
             }
-        } finally {
-            cursor.close();
         }
     }
 
