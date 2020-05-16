@@ -30,6 +30,16 @@ public class EmailFragment extends Fragment {
         Button validateBtn = view.findViewById(R.id.validateBtn);
         TextView result = view.findViewById(R.id.result);
 
+        Validator<String> validator = new EmailValidator();
+        validateBtn.setOnClickListener(v -> {
+            String email = input.getText().toString();
+            if (validator.validate(email)) {
+                result.setText("Success!");
+            } else {
+                result.setText("Validation error!!!");
+            }
+        });
+
         return view;
     }
 }
