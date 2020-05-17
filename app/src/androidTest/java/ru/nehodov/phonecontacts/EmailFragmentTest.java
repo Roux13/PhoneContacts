@@ -52,14 +52,14 @@ public class EmailFragmentTest {
 
     @Test
     public void checkMessageWhenIncorrectEmail() {
-        onView(withId(R.id.input)).perform(typeText(INCORRECT_EMAIL));
+        onView(withId(R.id.input)).perform(typeText(INCORRECT_EMAIL), closeSoftKeyboard());
         onView(withId(R.id.validateBtn)).perform(click());
         onView(withId(R.id.result)).check(matches(withText(INVALIDATE_MESSAGE)));
     }
 
     @Test
     public void checkMessageWhenCorrectEmail() {
-        onView(withId(R.id.input)).perform(typeText(CORRECT_EMAIL));
+        onView(withId(R.id.input)).perform(typeText(CORRECT_EMAIL), closeSoftKeyboard());
         onView(withId(R.id.validateBtn)).perform(click());
         onView(withId(R.id.result)).check(matches(withText(VALIDATE_MESSAGE)));
     }

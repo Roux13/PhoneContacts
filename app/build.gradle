@@ -25,6 +25,12 @@ android {
         targetCompatibility = 1.8
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
 }
 
 dependencies {
@@ -40,6 +46,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    testImplementation 'org.robolectric:robolectric:4.3.1'
 
     debugImplementation 'androidx.fragment:fragment-testing:1.2.4'
 }
